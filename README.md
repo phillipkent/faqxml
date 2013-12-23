@@ -5,9 +5,9 @@ Generate FAQ lists in html, plain text or TeX/PDF from a single source written i
 
 The [DocBook](http://sourceforge.net/projects/docbook/) xml format includes the qandaset element for the creation of FAQ listings. 
 
-On the other hand, this project implements a simple xsl stylesheet, which I found useful for my own purposes to create a simple FAQ list (intended for use in a website), where I wanted to see and control all of the details.
+On the other hand, this project implements simple xsl stylesheets, which I found useful for my own purposes to create a simple FAQ list (intended for use in a website), where I wanted to see and control all of the details. There are stylesheets for 'folded' html using JavaScript, long html, plain text and TeX. 
 
-???? By changing the headings, the same stylesheet can be used to produce a simple Glossary. 
+The stylesheets also define a glossary document type, which works like the FAQ by a simple change of headings
 
 CONTENT TO COME.
 
