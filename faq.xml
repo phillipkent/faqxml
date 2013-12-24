@@ -2,7 +2,7 @@
 
 <!-- 
     FAQ list for the Interoute VDC 2.0 
-    Version: 2013-12-23
+    Version: 2013-12-24
 -->
 
 <!DOCTYPE faq[
@@ -12,12 +12,13 @@
 <!ATTLIST qaref refid IDREF #REQUIRED>
 ]>
 
-<faq title="Interoute VDC 2.0 FAQ">
+<faq title="Interoute VDC 2.0 FAQ" version="0.2">
 
 <section title='Account' shownumber='off'>
 </section>
 
 <section title='About the Interoute VDC' shownumber='off'></section>
+
 <section title='Administration' shownumber='off'></section>
 
 <section title="Definitions" shownumber="off">
@@ -52,15 +53,22 @@ Interoute's VDC gives you complete control over the management of your virtual m
 
 </section>
 
-
 <section title='Default logins' shownumber='off'></section>
+
 <section title='Hypervisors' shownumber='off'></section>
+
 <section title='Networking' shownumber='off'></section>
+
 <section title='Operating systems' shownumber='off'></section>
+
 <section title='Security' shownumber='off'></section>
+
 <section title='Compute' shownumber='off'></section>
+
 <section title='Storage' shownumber='off'></section>
+
 <section title='Virtual Machines' shownumber='off'></section>
+
 <section title='Virtual Machine Images' shownumber='off'></section>
 
 

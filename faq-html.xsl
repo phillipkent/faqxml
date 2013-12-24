@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- faqxml: faq-html.xsl
+  Stylesheet for translation to html with folded answers
+  using JavaScript
+
+  Version: 0.2 (2013-12-24)
+-->
+
 <!-- 
  To do: 
-   Cross-referencing - internal - IS WORKING
+   Version and date
+   Footer "Created using faqxml" with link to Github
+   Cross-referencing - internal - THIS IS WORKING
    Cross-referencing - external to user guide, glossary?
    Make dual-purpose for glossary?
 -->
@@ -40,7 +49,7 @@ function toggle_all(state)
   for(var i=0; i &lt; elems.length; i++) {
     elems[i].style.display = state; 
   }
-<!-- 
+<!-- ALTERNATIVE VERSION 
   var elems = document.getElementsByTagName("div");
   for(var i=0; i &lt; elems.length; i++) {
     if(elems[i].id.indexOf("ans") != -1) {
@@ -93,11 +102,27 @@ p {
 
 <h1> <xsl:value-of select="@title"/> </h1>
 
-<para>
+<p><i>
+Version:
+<xsl:if test="@version">
+  <xsl:value-of select="@version"/>, 
+</xsl:if>
+<xsl:choose>
+  <xsl:when test="@date">
+    <xsl:value-of select="@date"/>
+  </xsl:when>
+  <xsl:otherwise>
+    <!-- current-date() requires XSLT version 2 -->
+    <xsl:value-of select="current-date()"/>
+  </xsl:otherwise>
+</xsl:choose>
+</i></p>
+<xsl:text> </xsl:text>
+<p>
 <a href="javascript:toggle_all('block');">[SHOW ALL ANSWERS]</a>
 <xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;</xsl:text>
 <a href="javascript:toggle_all('none');">[HIDE ALL ANSWERS]</a>
-</para>
+</p>
 
 <h2>Contents</h2>
 
@@ -110,6 +135,10 @@ p {
 
 <xsl:apply-templates/>
 
+<hr/>
+<para><i>
+Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a>
+</i></para>
 </body>
 </html>
 </xsl:template>
