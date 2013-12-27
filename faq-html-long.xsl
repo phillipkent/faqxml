@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- faqxml: faq-html.xsl
-  Stylesheet for translation to html with folded answers
-  using JavaScript
+<!-- faqxml: faq-html-long.xsl
+  Stylesheet for translation to html in 'long' form
 
-  Version: 0.2 (2013-12-24)
--->
-
-<!-- 
- To do: 
-   Cross-referencing - internal - THIS IS WORKING
-   Cross-referencing - external to glossary, user guide?
-   Make dual-purpose for glossary?
+  Version: 0.1 (2013-12-27)
 -->
 
 <xsl:stylesheet version="2.0"
@@ -29,35 +21,6 @@
 
 <title> <xsl:value-of select="@title"/> </title>
 
-<script language="javascript">
-<xsl:comment>
-function toggle_answer(id)
-{
-	var el = document.getElementById(id);
-	if (el.style.display == "block") {
-		el.style.display = "none";
-	} else {
-		el.style.display = "block";
-	}
-}
-
-function toggle_all(state)
-{
-  var elems = document.querySelectorAll("div[id^='ans']"); 
-  for(var i=0; i &lt; elems.length; i++) {
-    elems[i].style.display = state; 
-  }
-<!-- ALTERNATIVE VERSION 
-  var elems = document.getElementsByTagName("div");
-  for(var i=0; i &lt; elems.length; i++) {
-    if(elems[i].id.indexOf("ans") != -1) {
-       elems[i].style.display = state; 
-    }
-  }
--->
-}
-//</xsl:comment>
-</script>
 <style>
 div.qa {
 	padding-top: 0.1em;
@@ -95,6 +58,7 @@ p {
 	text-align: justify;
 }
 </style>
+
 </head>
 <body>
 
@@ -116,27 +80,16 @@ Version:
 </xsl:choose>
 </i></p>
 <xsl:text> </xsl:text>
-<p>
-<a href="javascript:toggle_all('block');">[SHOW ALL ANSWERS]</a>
-<xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;</xsl:text>
-<a href="javascript:toggle_all('none');">[HIDE ALL ANSWERS]</a>
-</p>
-
-<h2>Contents</h2>
 
 <xsl:call-template name="contents"/>
-
-<!-- CREDITS NOT IN USE 
-<h1>Credit list</h1>
-<xsl:call-template name="credit-list"/>
--->
 
 <xsl:apply-templates/>
 
 <hr/>
 <para><i>
-Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a> stylesheet faq-html
+Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a> stylesheet faq-html-long
 </i></para>
+
 </body>
 </html>
 </xsl:template>
@@ -166,7 +119,7 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template match="section">
 	<a><xsl:attribute name="name"><xsl:number count="section" level="multiple"/></xsl:attribute></a>
-	<h2>
+        <h2>
          <xsl:if test="@shownumber='on'">
                 <xsl:number count="section" level="multiple"/>.
          </xsl:if>
@@ -178,7 +131,7 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 	<a><xsl:attribute name="name"><xsl:number count="section" level="multiple"/></xsl:attribute></a>
 	<h3> <xsl:if test="@shownumber='on'">
                 <xsl:number count="section" level="multiple"/>.
-         </xsl:if><xsl:value-of select="@title"/></h3>
+         </xsl:if> <xsl:value-of select="@title"/></h3>
 	<xsl:apply-templates/>
 </xsl:template>
 
@@ -186,20 +139,20 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 	<a><xsl:attribute name="name"><xsl:number count="section" level="multiple"/></xsl:attribute></a>
 	<h4> <xsl:if test="@shownumber='on'">
                 <xsl:number count="section" level="multiple"/>.
-         </xsl:if><xsl:value-of select="@title"/></h4>
+         </xsl:if> <xsl:value-of select="@title"/></h4>
 	<xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="question-contents">
+<!-- TO BE DONE -->
 </xsl:template>
 
 <xsl:template match="qa">
 <a name="{@qa-id}"/>
 <div class="qa">
 <xsl:apply-templates select="question"/>
-<div>
-<xsl:attribute name="id">ans<xsl:number count="section|qa" format="1" level="multiple"/></xsl:attribute>
-<xsl:attribute name="style">display: none</xsl:attribute>
 <xsl:apply-templates select="answer"/>
 <xsl:apply-templates select="link"/>
-</div>
 </div>
 </xsl:template>
 
@@ -210,41 +163,26 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template match="question">
 <div class="question">
-<table width="100%">
-<tr>
-<td width="10%" valign="top">
-<p>
-<b>Question</b>
-<a title="Question"><xsl:attribute name="href">javascript:toggle_answer('ans<xsl:number count="section|qa" format="1" level="multiple"/>');</xsl:attribute>[+]</a>
-<xsl:text> </xsl:text>
-</p>
-<xsl:call-template name="author"/>
-</td>
-<td width="90%" valign="top"><xsl:call-template name="article"/></td>
-</tr>
-</table>
+<b>Question</b> <xsl:call-template name="author"/>
+<xsl:call-template name="article"/>
 </div>
 </xsl:template>
 
 <xsl:template match="answer">
 <div class="answer">
-<table width="100%">
-<tr>
-<td width="10%" valign="top"><p><b>Answer</b></p><xsl:call-template name="author"/></td>
-<td width="90%" valign="top"><xsl:call-template name="article"/></td>
-</tr>
-</table>
+<b>Answer</b> <xsl:call-template name="author"/>
+<xsl:call-template name="article"/>
 </div>
 </xsl:template>
 
 <xsl:template match="link">
 <div class="qa-link">
-<a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>Reference link</a>
+<a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a>
 </div>
 </xsl:template>
 
 <xsl:template name="author">
-<xsl:if test="@author"><p>[ <xsl:value-of select="@author"/> ]</p></xsl:if>
+<xsl:if test="@author"> [ <xsl:value-of select="@author"/> ] </xsl:if>
 </xsl:template>
 
 <xsl:template name="article">

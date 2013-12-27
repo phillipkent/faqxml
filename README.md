@@ -17,7 +17,7 @@ This project is a modification of "faqxml" by Mikhail Yakshin [http://faqxml.sou
 XSLT processor
 --------------
 
-You need an XSLT processor program to work with faqxml ...............
+You need an XSLT processor program to work with faqxml ............... There are numerous commercial versions.... The preferred free program is Saxon ..................... The processor needs to implement XSLT version 2......
 
 
 How to use
