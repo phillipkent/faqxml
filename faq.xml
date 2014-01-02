@@ -2,7 +2,7 @@
 
 <!-- 
     FAQ list for the Interoute VDC 2.0 
-    Version: 2013-12-26
+    Version: 2014-01-02
 -->
 
 <!DOCTYPE faq[
@@ -28,11 +28,10 @@
 What is a virtual data centre?
 </question>
 <answer>
-A Virtual Data Centre is an abstraction of a physical data centre. It offers the same infrastructure (network, storage and compute) in a virtualised environment; it offers Infrastructure as a Service. The infrastructure is available on demand, highly scalable and you only pay for what you use. 
+A Virtual Data Centre is an abstraction of a physical data centre. It offers the same infrastructure (network, storage and compute) in a virtualised environment; it offers Infrastructure as a Service. The infrastructure is available on demand, highly scalable and you only pay for what you use. 
 </answer>
 
 </qa>
-
 </section>
 
 <section title="Backup and Disaster Recovery" shownumber="off">

@@ -3,7 +3,7 @@
 <!-- faqxml: faq-html-long.xsl
   Stylesheet for translation to html in 'long' form
 
-  Version: 0.1 (2013-12-27)
+  Version: 0.1 (2014-01-02)
 -->
 
 <xsl:stylesheet version="2.0"
@@ -24,27 +24,25 @@
 <style>
 div.qa {
 	padding-top: 0.1em;
-	padding-bottom: 0.1em;
+	padding-bottom: 0.5em;
 }
 
 div.question {
-	text-align: justify;
-	padding: 0.1em;
+	padding: 0.2em 2em;
 }
 
 div.answer {
-	text-align: justify;
-	padding: 0.1em;
+	padding: 0.2em 2em;
 	margin-top: 0.1em;
 }
 
 div.qa-link {
 	text-align: right;
+	padding: 0em 2em;
 }
 
 div.toolbox {
 	float: right;
-	background-color: #72713F;
 	border: 1px solid white;
 	padding: 1em;
 }
@@ -97,6 +95,13 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:template name="contents">
 	<xsl:for-each select="section">
 		<xsl:call-template name="section-contents"/>
+                <xsl:if test="qa">
+                  <blockquote>
+                  <xsl:for-each select="qa">
+                     <xsl:call-template name="qa-contents"/>
+                  </xsl:for-each>
+                  </blockquote>
+		</xsl:if>
 	</xsl:for-each>
 </xsl:template>
 
@@ -116,6 +121,12 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 		</blockquote>
 	</xsl:if>
 </xsl:template>
+
+<xsl:template name="qa-contents">
+   Q. <a><xsl:attribute name="href">#<xsl:value-of select="@qa-id"/></xsl:attribute>
+      <para><xsl:value-of select="question"/></para></a>
+</xsl:template>
+
 
 <xsl:template match="section">
 	<a><xsl:attribute name="name"><xsl:number count="section" level="multiple"/></xsl:attribute></a>
@@ -143,9 +154,6 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 	<xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="question-contents">
-<!-- TO BE DONE -->
-</xsl:template>
 
 <xsl:template match="qa">
 <a name="{@qa-id}"/>
