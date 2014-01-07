@@ -42,10 +42,7 @@ Are backups possible?
 </question>
 
 <answer>
-<para>
 Interoute's VDC gives you complete control over the management of your virtual machines and data. You can perform data management in the VDC Control Centre: there are functions to create <emphasis>snapshots</emphasis> of virtual machines or storage volumes, which can be used as backups. See also <qaref refid="what-is-vdc"/> [?CROSS-REF DOCUMENTS] [?CROSS-REF GLOSSARY]
-</para>
-
 </answer>
 <link>http://www.interoute.com/vdc</link>
 </qa>

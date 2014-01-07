@@ -1,0 +1,35 @@
+<?xml version = '1.0' encoding='UTF-8'?>
+
+<!-- 
+    Glossary for the Interoute VDC 2.0 
+    Version: 2014-01-03
+-->
+
+<!DOCTYPE glossary[
+<!ELEMENT glossentry (glossterm, glossdef)>
+<!ATTLIST glossentry  glen-id ID #REQUIRED>
+<!ELEMENT glenref EMPTY>
+<!ATTLIST glenref refid IDREF #REQUIRED>
+]>
+
+<glossary title="Interoute VDC 2.0 Glossary" version="0.1">
+
+<glossentry glen-id="vdc">
+<glossterm>
+virtual data centre
+</glossterm>
+<glossdef>
+A Virtual Data Centre is an abstraction of a physical data centre. It offers the same infrastructure (network, storage and compute) in a virtualised environment; it offers Infrastructure as a Service. The infrastructure is available on demand, highly scalable and you only pay for what you use. 
+</glossdef>
+</glossentry>
+
+<glossentry glen-id="snapshot">
+<glossterm>
+snapshot
+</glossterm>
+<glossdef>
+There are functions to create <emphasis>snapshots</emphasis> of virtual machines or storage volumes, which can be used as backups. See also <glenref refid="vdc"/>
+</glossdef>
+</glossentry>
+
+</glossary>

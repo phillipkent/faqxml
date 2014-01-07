@@ -28,17 +28,16 @@ div.qa {
 }
 
 div.question {
-	padding: 0.2em 2em;
+	padding: 0.2em;
 }
 
 div.answer {
-	padding: 0.2em 2em;
+	padding: 0.2em;
 	margin-top: 0.1em;
 }
 
 div.qa-link {
 	text-align: right;
-	padding: 0em 2em;
 }
 
 div.toolbox {
@@ -85,7 +84,7 @@ Version:
 
 <hr/>
 <para><i>
-Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a> stylesheet faq-html-long
+Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a> stylesheet 'faq-html-long'
 </i></para>
 
 </body>

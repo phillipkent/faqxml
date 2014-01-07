@@ -4,14 +4,20 @@
   Stylesheet for translation to html with folded answers
   using JavaScript
 
-  Version: 0.2 (2013-12-24)
+  Version: 0.3 (2013-12-28)
+
+  This stylesheet is part of "faqxml" by Phillip Kent
+  [https://github.com/phillipkent/faqxml]
+  
+  "faqxml" is licensed under the GNU GENERAL PUBLIC LICENSE Version 3
+
+  Based on stylesheets by Mikhail Yakshin [http://faqxml.sourceforge.net],
+  licensed under GPLv2 
 -->
 
 <!-- 
- To do: 
-   Cross-referencing - internal - THIS IS WORKING
+ To do:
    Cross-referencing - external to glossary, user guide?
-   Make dual-purpose for glossary?
 -->
 
 <xsl:stylesheet version="2.0"
