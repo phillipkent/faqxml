@@ -4,7 +4,7 @@
   Stylesheet for translation to html with folded answers
   using JavaScript
 
-  Version: 0.3 (2013-12-28)
+  Version: 0.4 (2014-02-06)
 
   This stylesheet is part of "faqxml" by Phillip Kent
   [https://github.com/phillipkent/faqxml]
@@ -79,10 +79,6 @@ div.answer {
 	text-align: justify;
 	padding: 0.1em;
 	margin-top: 0.1em;
-}
-
-div.qa-link {
-	text-align: right;
 }
 
 div.toolbox {
@@ -204,7 +200,6 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:attribute name="id">ans<xsl:number count="section|qa" format="1" level="multiple"/></xsl:attribute>
 <xsl:attribute name="style">display: none</xsl:attribute>
 <xsl:apply-templates select="answer"/>
-<xsl:apply-templates select="link"/>
 </div>
 </div>
 </xsl:template>
@@ -243,11 +238,6 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </div>
 </xsl:template>
 
-<xsl:template match="link">
-<div class="qa-link">
-<a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute>Reference link</a>
-</div>
-</xsl:template>
 
 <xsl:template name="author">
 <xsl:if test="@author"><p>[ <xsl:value-of select="@author"/> ]</p></xsl:if>
@@ -255,6 +245,18 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template name="article">
 <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="link">
+<a>
+<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+<xsl:attribute name="target">_blank</xsl:attribute>
+<xsl:apply-templates/>
+</a>
+</xsl:template>
+
+<xsl:template match="mailto">
+<a href="mailto:{.}"><xsl:apply-templates/></a>
 </xsl:template>
 
 <xsl:template match="pre">

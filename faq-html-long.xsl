@@ -3,7 +3,7 @@
 <!-- faqxml: faq-html-long.xsl
   Stylesheet for translation to html in 'long' form
 
-  Version: 0.1 (2014-01-02)
+  Version: 0.2 (2014-02-06)
 -->
 
 <xsl:stylesheet version="2.0"
@@ -34,10 +34,6 @@ div.question {
 div.answer {
 	padding: 0.2em;
 	margin-top: 0.1em;
-}
-
-div.qa-link {
-	text-align: right;
 }
 
 div.toolbox {
@@ -159,7 +155,6 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <div class="qa">
 <xsl:apply-templates select="question"/>
 <xsl:apply-templates select="answer"/>
-<xsl:apply-templates select="link"/>
 </div>
 </xsl:template>
 
@@ -182,10 +177,17 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </div>
 </xsl:template>
 
+
 <xsl:template match="link">
-<div class="qa-link">
-<a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a>
-</div>
+<a>
+<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+<xsl:attribute name="target">_blank</xsl:attribute>
+<xsl:apply-templates/>
+</a>
+</xsl:template>
+
+<xsl:template match="mailto">
+<a href="mailto:{.}"><xsl:apply-templates/></a>
 </xsl:template>
 
 <xsl:template name="author">
