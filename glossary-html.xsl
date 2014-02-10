@@ -3,7 +3,9 @@
 <!-- faqxml: glossary-html.xsl
   Stylesheet for translation to html
 
-  Version: 0.1 (2014-01-03)
+  Version: 0.3 (2014-02-08)
+
+  Sorting: see D. Tidwell, "XSLT (second edition)", 2008.
 -->
 
 <xsl:stylesheet version="2.0"
@@ -16,6 +18,7 @@
 />
 
 <xsl:template match="glossary">
+
 <html>
 <head>
 
@@ -27,17 +30,17 @@ div.glossentry {
 	padding-bottom: 0.5em;
 }
 
+<!--
 div.glossterm {
-        font-style: italic;
 }
 
 div.glossdef {
-        font-style: 
 }
 
 p {
 	text-align: justify;
 }
+-->
 </style>
 
 </head>
@@ -62,7 +65,21 @@ Version:
 </i></p>
 <xsl:text> </xsl:text>
 
-<xsl:apply-templates/>
+<xsl:choose>
+  <!-- If the sorted attribute is set, do sorting of the glossary entries -->
+  <xsl:when test="@sorted">
+     <xsl:apply-templates>
+       <xsl:sort select="@sortkey"/> <!--primary sort by value of sortkey-->
+       <xsl:sort select="glossterm"/> <!--secondary sort by glossterm if sortkey values are same-->
+     </xsl:apply-templates>     
+  </xsl:when>
+  <xsl:otherwise>
+     <xsl:apply-templates/>
+  </xsl:otherwise>
+</xsl:choose>
+
+
+
 
 <hr/>
 <para><i>
@@ -76,25 +93,45 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:template match="glossentry">
 <a name="{@glen-id}"/>
 <div class="glossentry">
+<xsl:apply-templates select="glossterm"/><xsl:apply-templates select="glossdef"/>
+</div>
+</xsl:template>
 
-<div class="glossterm"> 
+<xsl:template match="glossterm">
+<strong>
+<xsl:call-template name="article"/>.</strong>
+</xsl:template>
+
+<xsl:template match="glossdef">
 <xsl:call-template name="article"/>
-</div>
-
-<div class="glossdef">
-...............
-</div>
-
-</div>
 </xsl:template>
 
 <xsl:template match="glenref">
- <a href="{concat('#',@refid)}">
-   <xsl:value-of select="id(@refid)/glossterm"/></a>
+   <xsl:choose>
+   <xsl:when test="@linktext">
+      <a href="{concat('#',@refid)}"><xsl:value-of select="@linktext"/></a>
+   </xsl:when>
+   <xsl:otherwise>
+     <a href="{concat('#',@refid)}"><xsl:value-of select="id(@refid)/glossterm"/></a> 
+   </xsl:otherwise>
+   </xsl:choose>
 </xsl:template>
 
-<xsl:template name="article">
+<xsl:template name="article"><xsl:apply-templates/></xsl:template>
+
+<xsl:template match="link">
+<a>
+<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+<xsl:attribute name="target">_blank</xsl:attribute>
 <xsl:apply-templates/>
+<!-- trying to insert arrow character - not working
+&#8599;
+-->
+</a>
+</xsl:template>
+
+<xsl:template match="mailto">
+<a href="mailto:{.}"><xsl:apply-templates/></a>
 </xsl:template>
 
 <xsl:template match="pre">

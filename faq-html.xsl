@@ -4,7 +4,7 @@
   Stylesheet for translation to html with folded answers
   using JavaScript
 
-  Version: 0.4 (2014-02-06)
+  Version: 0.5 (2014-02-10)
 
   This stylesheet is part of "faqxml" by Phillip Kent
   [https://github.com/phillipkent/faqxml]
@@ -124,12 +124,14 @@ Version:
 <a href="javascript:toggle_all('none');">[HIDE ALL ANSWERS]</a>
 </p>
 
-<h2>Contents</h2>
+<!-- CONTENTS NOT IN USE
 
+<h2>Contents</h2>
 <xsl:call-template name="contents"/>
+-->
 
 <!-- CREDITS NOT IN USE 
-<h1>Credit list</h1>
+<h2>Credit list</h2>
 <xsl:call-template name="credit-list"/>
 -->
 
@@ -192,7 +194,8 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 	<xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="qa">
+<!-- only output qa elements with status 'published'-->
+<xsl:template match="qa[status='published']">
 <a name="{@qa-id}"/>
 <div class="qa">
 <xsl:apply-templates select="question"/>
@@ -202,6 +205,10 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:apply-templates select="answer"/>
 </div>
 </div>
+</xsl:template>
+
+<xsl:template match="qa[status='unpublished']">
+<!-- do nothing -->
 </xsl:template>
 
 <xsl:template match="qaref">

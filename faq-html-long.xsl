@@ -3,7 +3,7 @@
 <!-- faqxml: faq-html-long.xsl
   Stylesheet for translation to html in 'long' form
 
-  Version: 0.2 (2014-02-06)
+  Version: 0.3 (2014-02-10)
 -->
 
 <xsl:stylesheet version="2.0"
@@ -76,7 +76,7 @@ Version:
 
 <xsl:call-template name="contents"/>
 
-<xsl:apply-templates/>
+<xsl:apply-templates />
 
 <hr/>
 <para><i>
@@ -92,7 +92,7 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 		<xsl:call-template name="section-contents"/>
                 <xsl:if test="qa">
                   <blockquote>
-                  <xsl:for-each select="qa">
+                  <xsl:for-each select="qa[status='published']"> <!--only if qa is 'published'-->
                      <xsl:call-template name="qa-contents"/>
                   </xsl:for-each>
                   </blockquote>
@@ -118,8 +118,8 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </xsl:template>
 
 <xsl:template name="qa-contents">
-   Q. <a><xsl:attribute name="href">#<xsl:value-of select="@qa-id"/></xsl:attribute>
-      <para><xsl:value-of select="question"/></para></a>
+   <p>Q. <a><xsl:attribute name="href">#<xsl:value-of select="@qa-id"/></xsl:attribute>
+      <xsl:value-of select="question"/></a></p>
 </xsl:template>
 
 
@@ -149,13 +149,17 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 	<xsl:apply-templates/>
 </xsl:template>
 
-
-<xsl:template match="qa">
+<!-- only output qa elements with status 'published'-->
+<xsl:template match="qa[status='published']">
 <a name="{@qa-id}"/>
 <div class="qa">
 <xsl:apply-templates select="question"/>
 <xsl:apply-templates select="answer"/>
 </div>
+</xsl:template>
+
+<xsl:template match="qa[status='unpublished']">
+<!-- do nothing -->
 </xsl:template>
 
 <xsl:template match="qaref">
@@ -165,14 +169,13 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template match="question">
 <div class="question">
-<b>Question</b> <xsl:call-template name="author"/>
+<b>Q></b> <xsl:call-template name="author"/>
 <xsl:call-template name="article"/>
 </div>
 </xsl:template>
 
 <xsl:template match="answer">
 <div class="answer">
-<b>Answer</b> <xsl:call-template name="author"/>
 <xsl:call-template name="article"/>
 </div>
 </xsl:template>
@@ -183,6 +186,9 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
 <xsl:attribute name="target">_blank</xsl:attribute>
 <xsl:apply-templates/>
+<!-- trying to insert arrow character - not working
+&#8599;
+-->
 </a>
 </xsl:template>
 
