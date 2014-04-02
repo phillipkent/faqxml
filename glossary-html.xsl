@@ -3,9 +3,10 @@
 <!-- faqxml: glossary-html.xsl
   Stylesheet for translation to html
 
-  Version: 0.3 (2014-02-08)
+  Version: 1.0 (2014-03-31)
 
   Sorting: see D. Tidwell, "XSLT (second edition)", 2008.
+
 -->
 
 <xsl:stylesheet version="2.0"
@@ -25,12 +26,14 @@
 <title> <xsl:value-of select="@title"/> </title>
 
 <style>
+
+<!--
 div.glossentry {
 	padding-top: 0.1em;
 	padding-bottom: 0.5em;
 }
 
-<!--
+
 div.glossterm {
 }
 
@@ -67,7 +70,7 @@ Version:
 
 <xsl:choose>
   <!-- If the sorted attribute is set, do sorting of the glossary entries -->
-  <xsl:when test="@sorted">
+  <xsl:when test="@sorted='true'">
      <xsl:apply-templates>
        <xsl:sort select="@sortkey"/> <!--primary sort by value of sortkey-->
        <xsl:sort select="glossterm"/> <!--secondary sort by glossterm if sortkey values are same-->
@@ -77,9 +80,6 @@ Version:
      <xsl:apply-templates/>
   </xsl:otherwise>
 </xsl:choose>
-
-
-
 
 <hr/>
 <para><i>
@@ -91,10 +91,10 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </xsl:template>
 
 <xsl:template match="glossentry">
-<a name="{@glen-id}"/>
-<div class="glossentry">
+<div class="glossentry" style="padding-bottom:0.15em">
+<p><a name="{@glen-id}"/>
 <xsl:apply-templates select="glossterm"/><xsl:apply-templates select="glossdef"/>
-</div>
+</p></div>
 </xsl:template>
 
 <xsl:template match="glossterm">
@@ -124,7 +124,7 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
 <xsl:attribute name="target">_blank</xsl:attribute>
 <xsl:apply-templates/>
-<!-- trying to insert arrow character - not working
+<!-- trying to insert arrow character for 'external link'- not working
 &#8599;
 -->
 </a>

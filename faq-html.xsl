@@ -220,15 +220,15 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <div class="question">
 <table width="100%">
 <tr>
-<td width="10%" valign="top">
+<td width="5%" valign="top">
 <p>
-<b>Question</b>
+<b>Q</b>
 <a title="Question"><xsl:attribute name="href">javascript:toggle_answer('ans<xsl:number count="section|qa" format="1" level="multiple"/>');</xsl:attribute>[+]</a>
 <xsl:text> </xsl:text>
 </p>
 <xsl:call-template name="author"/>
 </td>
-<td width="90%" valign="top"><xsl:call-template name="article"/></td>
+<td width="95%" valign="top"><xsl:call-template name="article"/></td>
 </tr>
 </table>
 </div>
@@ -238,8 +238,8 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <div class="answer">
 <table width="100%">
 <tr>
-<td width="10%" valign="top"><p><b>Answer</b></p><xsl:call-template name="author"/></td>
-<td width="90%" valign="top"><xsl:call-template name="article"/></td>
+<td width="5%" valign="top"><p><b>A</b></p><xsl:call-template name="author"/></td>
+<td width="95%" valign="top"><xsl:call-template name="article"/></td>
 </tr>
 </table>
 </div>

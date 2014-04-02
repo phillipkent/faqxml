@@ -3,7 +3,7 @@
 <!-- faqxml: faq-html-long.xsl
   Stylesheet for translation to html in 'long' form
 
-  Version: 0.3 (2014-02-10)
+  Version: 1.0 (2014-03-27)
 -->
 
 <xsl:stylesheet version="2.0"
@@ -58,7 +58,7 @@ p {
 <h1> <xsl:value-of select="@title"/> </h1>
 
 <p><i>
-Version:
+(Version:
 <xsl:if test="@version">
   <xsl:value-of select="@version"/>, 
 </xsl:if>
@@ -71,17 +71,22 @@ Version:
     <xsl:value-of select="current-date()"/>
   </xsl:otherwise>
 </xsl:choose>
-</i></p>
+)</i></p>
 <xsl:text> </xsl:text>
+<xsl:if test="@toplinks='true'">
+<p><a name="Top"></a></p>
+</xsl:if>
 
 <xsl:call-template name="contents"/>
 
 <xsl:apply-templates />
 
+<div>
 <hr/>
-<para><i>
+<p><i>
 Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a> stylesheet 'faq-html-long'
-</i></para>
+</i></p>
+</div>
 
 </body>
 </html>
@@ -101,13 +106,13 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </xsl:template>
 
 <xsl:template name="section-contents">
-	<p>
+	<p><strong>
 	<a><xsl:attribute name="href">#<xsl:number count="section" level="multiple"/> </xsl:attribute>
          <xsl:if test="@shownumber='on'">
                 <xsl:number count="section" level="multiple"/>.
          </xsl:if> 
          <xsl:value-of select="@title"/></a>
-	</p>
+	</strong></p>
 	<xsl:if test="section">
 		<blockquote>
 		<xsl:for-each select="section">
@@ -131,6 +136,9 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
          </xsl:if>
          <xsl:value-of select="@title"/></h2>
 	<xsl:apply-templates/>
+        <xsl:if test="../@toplinks='true'">
+           <p style="text-align:right; margin-top:1em"><a style="text-align:right;" href="#Top">Back to Top</a></p>
+        </xsl:if> 
 </xsl:template>
 
 <xsl:template match="section/section">
@@ -169,7 +177,7 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template match="question">
 <div class="question">
-<b>Q></b> <xsl:call-template name="author"/>
+<b>Q.</b> <xsl:call-template name="author"/>
 <xsl:call-template name="article"/>
 </div>
 </xsl:template>
