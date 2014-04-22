@@ -79,6 +79,14 @@ p {
 
 <xsl:call-template name="contents"/>
 
+<!-- START: SPECIAL FOR INTEROUTE: BACK BUTTON TO VDC 2.0 DOCUMENTATION INDEX PAGE -->
+<p style="text-align:right;">
+    <a style="text-align:right;" href="/main/knowledge-centre/library/vdc-2-launch-documentation">
+        <img style="width: 220px; height: 36px;" src="/main/sites/default/files/images/Back_to_VDC_docs.PNG" alt="Go back to VDC 2.0 documentation"></img>
+    </a>
+</p>
+<!-- END: SPECIAL FOR INTEROUTE: BACK BUTTON TO VDC 2.0 DOCUMENTATION INDEX PAGE -->
+
 <xsl:apply-templates />
 
 <div>

@@ -3,15 +3,16 @@
 <!-- faqxml: glossary-html.xsl
   Stylesheet for translation to html
 
-  Version: 1.0 (2014-03-31)
+  Version: 1.1 (2014-04-22)
 
   Sorting: see D. Tidwell, "XSLT (second edition)", 2008.
 
+  This version adds: OPTIONAL INSERTION OF ALPHABETICAL LETTER HEADINGS
+  Based on: http://stackoverflow.com/questions/734946/building-list-with-xslt
 -->
 
-<xsl:stylesheet version="2.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns="http://www.w3.org/TR/xhtml1/strict">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+     xmlns="http://www.w3.org/TR/xhtml1/strict" version="2.0">
 
 <xsl:output
    method="html"
@@ -26,7 +27,12 @@
 <title> <xsl:value-of select="@title"/> </title>
 
 <style>
-
+<!-- 
+  Styles are not in use. (This is appropriate for using the html output where a website CSS
+  file is in use - or in a CMS website such as Drupal or WordPress where file-specific 
+  style definitions are not possible.)
+  Uncomment if needed.
+-->
 <!--
 div.glossentry {
 	padding-top: 0.1em;
@@ -69,17 +75,70 @@ Version:
 <xsl:text> </xsl:text>
 
 <xsl:choose>
-  <!-- If the sorted attribute is set, do sorting of the glossary entries -->
-  <xsl:when test="@sorted='true'">
+  <!-- Output sorted and with alphabetical headings -->
+  <xsl:when test="@sorted='true' and @alphahead='true'">
+       <!-- First grouping pass creates the Contents line-->
+       <p><a name="Top"/></p>
+       <p><strong><i>Contents: &#x9;
+       <xsl:for-each-group select="glossentry"
+           group-by="upper-case(substring(@sortkey,1,1))">
+        <xsl:sort select="current-grouping-key()"/>
+       
+        <a><xsl:attribute name="href"><xsl:sequence select=
+           "concat('#',current-grouping-key())"/></xsl:attribute>
+        <xsl:sequence select=
+           "current-grouping-key()"/>
+        </a>&#160;
+        </xsl:for-each-group>
+       </i></strong></p>
+       <!-- START: SPECIAL FOR INTEROUTE: BACK BUTTON TO VDC 2.0 DOCUMENTATION INDEX PAGE -->
+       <p style="text-align:right;">
+       <a style="text-align:right;" href="/main/knowledge-centre/library/vdc-2-launch-documentation">
+        <img style="width: 220px; height: 36px;" src="/main/sites/default/files/images/Back_to_VDC_docs.PNG" alt="Go back to VDC 2.0 documentation"></img>
+       </a>
+       </p>
+       <!-- END: SPECIAL FOR INTEROUTE: BACK BUTTON TO VDC 2.0 DOCUMENTATION INDEX PAGE -->
+       <!-- Second grouping pass creates the glossary content --> 
+       <xsl:for-each-group select="glossentry"
+           group-by="upper-case(substring(@sortkey,1,1))">
+        <xsl:sort select="current-grouping-key()"/>
+
+        <h3><a><xsl:attribute name="name"><xsl:sequence select=
+           "current-grouping-key()"/></xsl:attribute></a>
+            <xsl:sequence select="current-grouping-key()"/></h3>
+
+        <xsl:for-each select="current-group()">
+          <xsl:sort select="upper-case(sortkey)"/>
+          <xsl:call-template name="glossentry"/>
+          <!--<xsl:apply-templates select="glossentry"/>-->
+        </xsl:for-each>
+        
+        <xsl:if test="../@toplinks='true'">
+        <p style="text-align:right; margin-top:0.3em"><a style="text-align:right;" href="#Top">Back to Top</a></p>
+        </xsl:if>
+
+      </xsl:for-each-group>
+  </xsl:when>   
+  <!-- If the sorted attribute is set, do sorting but not with alpha headings --> 
+  <xsl:when test="@sorted='true'"> 
      <xsl:apply-templates>
        <xsl:sort select="@sortkey"/> <!--primary sort by value of sortkey-->
-       <xsl:sort select="glossterm"/> <!--secondary sort by glossterm if sortkey values are same-->
-     </xsl:apply-templates>     
-  </xsl:when>
+       <xsl:sort select="glossterm"/> <!-- secondary sort by glossterm if sortkey values are same-->
+     </xsl:apply-templates>
+</xsl:when>
+  <!-- Otherwise no sorting, use order of glossary terms as in the xml source -->
   <xsl:otherwise>
      <xsl:apply-templates/>
   </xsl:otherwise>
 </xsl:choose>
+
+<!-- START: SPECIAL FOR INTEROUTE: BACK BUTTON TO VDC 2.0 DOCUMENTATION INDEX PAGE -->
+    <p style="text-align:right;">
+    <a style="text-align:right;" href="/main/knowledge-centre/library/vdc-2-launch-documentation">
+    <img style="width: 220px; height: 36px;" src="/main/sites/default/files/images/Back_to_VDC_docs.PNG" alt="Go back to VDC 2.0 documentation"></img>
+    </a>
+</p>
+<!-- END: SPECIAL FOR INTEROUTE: BACK BUTTON TO VDC 2.0 DOCUMENTATION INDEX PAGE -->
 
 <hr/>
 <para><i>
@@ -90,7 +149,7 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </html>
 </xsl:template>
 
-<xsl:template match="glossentry">
+<xsl:template match="glossentry" name="glossentry">
 <div class="glossentry" style="padding-bottom:0.15em">
 <p><a name="{@glen-id}"/>
 <xsl:apply-templates select="glossterm"/><xsl:apply-templates select="glossdef"/>
