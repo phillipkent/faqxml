@@ -3,12 +3,12 @@
 <!-- faqxml: glossary-html.xsl
   Stylesheet for translation to html
 
-  Version: 1.1 (2014-04-22)
+  Version: 1.2 (2014-04-25)
 
   Sorting: see D. Tidwell, "XSLT (second edition)", 2008.
 
-  This version adds: OPTIONAL INSERTION OF ALPHABETICAL LETTER HEADINGS
-  Based on: http://stackoverflow.com/questions/734946/building-list-with-xslt
+  Option to insert alphabetical headings and contents line is based on: 
+     http://stackoverflow.com/questions/734946/building-list-with-xslt
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -80,7 +80,7 @@ Version:
        <!-- First grouping pass creates the Contents line-->
        <p><a name="Top"/></p>
        <p><strong><i>Contents: &#x9;
-       <xsl:for-each-group select="glossentry"
+       <xsl:for-each-group select="glossentry[status='published']"
            group-by="upper-case(substring(@sortkey,1,1))">
         <xsl:sort select="current-grouping-key()"/>
        
@@ -91,9 +91,9 @@ Version:
         </a>&#160;
         </xsl:for-each-group>
        </i></strong></p>
-
+       
        <!-- Second grouping pass creates the glossary content --> 
-       <xsl:for-each-group select="glossentry"
+       <xsl:for-each-group select="glossentry[status='published']"
            group-by="upper-case(substring(@sortkey,1,1))">
         <xsl:sort select="current-grouping-key()"/>
 
@@ -126,6 +126,7 @@ Version:
   </xsl:otherwise>
 </xsl:choose>
 
+
 <hr/>
 <para><i>
 Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faqxml</a> stylesheet 'glossary-html'
@@ -135,11 +136,20 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 </html>
 </xsl:template>
 
+<!-- only output glossentry elements with status 'published'-->
 <xsl:template match="glossentry" name="glossentry">
-<div class="glossentry" style="padding-bottom:0.15em">
-<p><a name="{@glen-id}"/>
-<xsl:apply-templates select="glossterm"/><xsl:apply-templates select="glossdef"/>
-</p></div>
+<xsl:choose>
+   <xsl:when test="status='published'">
+      <div class="glossentry" style="padding-bottom:0.15em">
+      <p><a name="{@glen-id}"/>
+      <xsl:apply-templates select="glossterm"/><xsl:apply-templates select="glossdef"/>
+      </p></div>
+   </xsl:when>
+   <xsl:otherwise>
+      <!-- output nothing -->
+   </xsl:otherwise>
+   </xsl:choose>
+
 </xsl:template>
 
 <xsl:template match="glossterm">
@@ -213,6 +223,10 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template match="para">
 <p><xsl:apply-templates/></p>
+</xsl:template>
+
+<xsl:template match="command">
+<code><xsl:apply-templates/></code>
 </xsl:template>
 
 </xsl:stylesheet>
