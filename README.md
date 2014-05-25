@@ -48,10 +48,13 @@ The stylesheet includes a section for CSS styles (it is commented out). Use thes
 
 #### Optional
 `version="1.0.1a beta"` (any numbers or text for version information; displayed as subtitle)
+
 `date="2014-05-24"` (any numbers or text for date information, displayed as subtitle; if no date specified, the current date is displayed in ISO format)
 
 Use `sorted="true"` to get output with entries sorted based on alphabetical order of `sortkey`, otherwise the order is as given in the xml source
-Use `alphahead="true"` to get alphabetical letter headings (only when `sortkey="true"`) 
+
+Use `alphahead="true"` to get alphabetical letter headings (only when `sortkey="true"`)
+ 
 Use `toplinks="true"` to get "Back to Top" links (only when `alphahead="true"`)
 (Not yet implemented: grouping/sorting based on `topickey`)
 
@@ -67,12 +70,19 @@ Here is an example:
     </glossentry>
 
 Explanation:
+
 `glen-id` is the unique ID string you use to make links to this entry (in HTML it becomes the content of `<a name="..."\>`)
+
 `sortkey` is the text which will be used for alphabetical sorting; it's useful because in a multi-word term the first word may not be the one that you want to decide the sort order
+
 `topickey` is a text string that specifies the topic of the entry; not currently used - a later version of faqxml will implement grouping and sorting of entries using this key
+
 `status` is published or unpublished; if unpublished the entry is not included in the output
+
 `comment` is a private comment, it is not included in the output
+
 `glossterm` is the glossary term
+
 `glossdef` is the definition of the term; note the linebreak after `<glossdef>` and there is NOT a linebreak before `<\glossdef>`; you need to do it this way so the linebreaks in the output come out correctly.
 
 ### Cross-referencing within the glossary 
