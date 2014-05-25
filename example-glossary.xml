@@ -1,0 +1,69 @@
+<?xml version = '1.0' encoding='UTF-8'?>
+
+<?xml-stylesheet type="text/xsl" href="glossary-html.xsl"?>
+
+<!-- 
+    Glossary example file for use with faqxml stylesheets  
+    Version: 1.0 on 2014-05-25
+-->
+
+<!DOCTYPE glossary[
+<!ELEMENT glossentry (status, comment, glossterm, glossdef)>
+<!ATTLIST glossentry  glen-id ID #REQUIRED>
+<!ELEMENT glenref EMPTY>
+<!ATTLIST glenref refid IDREF #REQUIRED>
+]>
+
+<!-- 
+  Insert sorted="true" to get sorted output based on alphabetical order of sortkey
+  Insert alphahead="true" attribute to get alphabetical letter headings (only when sortkey="true") 
+  Insert toplinks="true" to get "Back to Top" links (only when alphahead="true")
+  (Not yet implemented: grouping/sorting based on topickey)
+-->
+
+<!-- empty glossentry 
+<glossentry glen-id="x" sortkey="x" topickey="x"> 
+<status>published</status> 
+<comment> </comment>
+<glossterm> </glossterm> 
+<glossdef> 
+x.</glossdef> 
+</glossentry>
+-->
+
+<glossary title="Glossary Example by faqxml" version="1.0" date="2014-05-24" 
+    sorted="true" alphahead="true" toplinks="true">
+
+<glossentry glen-id="vitruvius" sortkey="vitruvius" topickey="Classical Orders"> 
+<status>published</status> 
+<comment></comment>
+<glossterm>Vitruvius</glossterm> 
+<glossdef> 
+Marcus Vitruvius Pollio was an architect and engineer of the first century BCE. His book <emphasis>De Architectura</emphasis> summarises classical architecture.</glossdef> 
+</glossentry>
+
+<glossentry glen-id="corinthian-column" sortkey="column" topickey="Ancient styles"> 
+<status>published</status> 
+<comment>Brief description to start; this needs to be expanded</comment>
+<glossterm>Corinthian column</glossterm> 
+<glossdef> 
+Corinthian columns are slender and fluted. Their capitals are bell-shaped decorated with acanthus leaves. See also <glenref refid="doric-column"/></glossdef> 
+</glossentry>
+
+<glossentry glen-id="doric-column" sortkey="column" topickey="Ancient styles"> 
+<status>published</status> 
+<comment>Brief description; this needs to be expanded</comment>
+<glossterm>Doric column</glossterm> 
+<glossdef> 
+Doric columns are stout, typically 6 to 7 times as tall as the diameter at the base. See also <glenref refid="corinthian-column" linktext="column of the Corinithian order"/>.</glossdef> 
+</glossentry>
+
+<glossentry glen-id="orders-classical" sortkey="orders" topickey="Classical Orders"> 
+<status>published</status> 
+<comment></comment>
+<glossterm>Orders of classical architecture</glossterm> 
+<glossdef> 
+There are five classical orders: Ionic, Doric, Corinthian, Tuscan and Composite. <link url="http://en.wikipedia.org/wiki/Classical_architecture">Read more at Wikipedia</link>.</glossdef> 
+</glossentry>
+
+</glossary>

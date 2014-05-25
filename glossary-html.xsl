@@ -3,7 +3,7 @@
 <!-- faqxml: glossary-html.xsl
   Stylesheet for translation to html
 
-  Version: 1.2 (2014-04-25)
+  Version: 1.3 (2014-05-25)
 
   Sorting: see D. Tidwell, "XSLT (second edition)", 2008.
 
@@ -28,9 +28,9 @@
 
 <style>
 <!-- 
-  Styles are not in use. (This is appropriate for using the html output where a website CSS
+  Styles are not in use. This is appropriate for using the html output where a website CSS
   file is in use - or in a CMS website such as Drupal or WordPress where file-specific 
-  style definitions are not possible.)
+  style definitions are not possible.
   Uncomment if needed.
 -->
 <!--
