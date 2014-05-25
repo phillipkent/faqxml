@@ -44,9 +44,11 @@ The stylesheet includes a section for CSS styles (it is commented out). Use thes
 ### Attributes to `<glossary>`
 
 #### Required
+
 `title="The Glossary Heading"` (this will be displayed as the heading of the HTML page/document)
 
 #### Optional
+
 `version="1.0.1a beta"` (any numbers or text for version information; displayed as subtitle)
 
 `date="2014-05-24"` (any numbers or text for date information, displayed as subtitle; if no date specified, the current date is displayed in ISO format)
@@ -56,6 +58,7 @@ Use `sorted="true"` to get output with entries sorted based on alphabetical orde
 Use `alphahead="true"` to get alphabetical letter headings (only when `sortkey="true"`)
  
 Use `toplinks="true"` to get "Back to Top" links (only when `alphahead="true"`)
+
 (Not yet implemented: grouping/sorting based on `topickey`)
 
 ### The contents of a `<glossentry>`
@@ -92,6 +95,7 @@ Example files
 -------------
 
 example-faq.xml [TO COME]
+
 example-glossary.xml
 
 
