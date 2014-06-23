@@ -3,7 +3,9 @@
 <!-- faqxml: faq-html-long.xsl
   Stylesheet for translation to html in 'long' form
 
-  Version: 1.0 (2014-03-27)
+  Version: 1.1 (2014-06-17)
+  Added 'outputview' attribute to <faq>: 
+     outputview="author|release"; author view shows unpublished entries and comment contents
 -->
 
 <xsl:stylesheet version="2.0"
@@ -55,7 +57,12 @@ p {
 </head>
 <body>
 
-<h1> <xsl:value-of select="@title"/> </h1>
+<h1> 
+  <xsl:if test="@outputview='author'">
+     <xsl:text> ***AUTHOR VIEW***</xsl:text>
+  </xsl:if>
+ <xsl:value-of select="@title"/> 
+</h1>
 
 <p><i>
 (Version:
@@ -97,9 +104,18 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 		<xsl:call-template name="section-contents"/>
                 <xsl:if test="qa">
                   <blockquote>
-                  <xsl:for-each select="qa[status='published']"> <!--only if qa is 'published'-->
-                     <xsl:call-template name="qa-contents"/>
-                  </xsl:for-each>
+                  <xsl:choose>
+                     <xsl:when test="../@outputview='author'">
+                        <xsl:for-each select="*"> 
+                          <xsl:call-template name="qa-contents"/>
+                        </xsl:for-each>
+                     </xsl:when>
+                     <xsl:otherwise>
+                        <xsl:for-each select="qa[status='published']"> <!--only if qa is 'published'-->
+                          <xsl:call-template name="qa-contents"/>
+                        </xsl:for-each>
+		     </xsl:otherwise>
+		  </xsl:choose>
                   </blockquote>
 		</xsl:if>
 	</xsl:for-each>
@@ -122,8 +138,9 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 	</xsl:if>
 </xsl:template>
 
+
 <xsl:template name="qa-contents">
-   <p>Q. <a><xsl:attribute name="href">#<xsl:value-of select="@qa-id"/></xsl:attribute>
+   <p><xsl:if test="status='unpublished'">*UNPUBLISHED*</xsl:if> Q. <a><xsl:attribute name="href">#<xsl:value-of select="@qa-id"/></xsl:attribute>
       <xsl:value-of select="question"/></a></p>
 </xsl:template>
 
@@ -159,15 +176,32 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <!-- only output qa elements with status 'published'-->
 <xsl:template match="qa[status='published']">
-<a name="{@qa-id}"/>
-<div class="qa">
-<xsl:apply-templates select="question"/>
-<xsl:apply-templates select="answer"/>
-</div>
+  <a name="{@qa-id}"/>
+  <div class="qa">
+    <xsl:if test="../../@outputview='author'"> 
+      <xsl:apply-templates select="comment"/> <!-- show if outputview='author'-->
+    </xsl:if>
+    <xsl:apply-templates select="question"/>
+    <xsl:apply-templates select="answer"/>
+    <xsl:if test="../../@outputview='author'">
+      <xsl:call-template name="hrule"/>
+    </xsl:if>
+  </div>
 </xsl:template>
 
 <xsl:template match="qa[status='unpublished']">
-<!-- do nothing -->
+ <!-- blank output except for outputview='author' -->
+   <xsl:if test="../../@outputview='author'">
+     <a name="{@qa-id}"/>
+     <div class="qa">
+        <xsl:text> </xsl:text>
+        <xsl:apply-templates select="status"/>
+        <xsl:apply-templates select="comment"/>
+        <xsl:apply-templates select="question"/>
+        <xsl:apply-templates select="answer"/>       
+        <xsl:call-template name="hrule"/>
+     </div>
+   </xsl:if>
 </xsl:template>
 
 <xsl:template match="qaref">
@@ -185,6 +219,18 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 <xsl:template match="answer">
 <div class="answer">
 <xsl:call-template name="article"/>
+</div>
+</xsl:template>
+
+<xsl:template match="status">
+<div class="status">
+  <b> STATUS: <xsl:call-template name="article"/> </b>
+</div>
+</xsl:template>
+
+<xsl:template match="comment">
+<div class="comment">
+  <b><em> COMMENT: <xsl:call-template name="article"/> </em></b>
 </div>
 </xsl:template>
 
@@ -238,6 +284,10 @@ Created with <a href="https://github.com/phillipkent/faqxml" target="_blank">faq
 
 <xsl:template match="br">
 <br/>
+</xsl:template>
+
+<xsl:template name="hrule">
+<hr/>
 </xsl:template>
 
 <xsl:template match="emphasis">
