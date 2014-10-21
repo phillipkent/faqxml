@@ -1,5 +1,6 @@
 faqxml
 ======
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/phillipkent/faqxml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Generate _FAQ_ lists and _glossaries_ in html, plain text or TeX (convertible to PDF) from a single source written in XML.
 
