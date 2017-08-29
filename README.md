@@ -5,7 +5,7 @@ Generate _FAQ_ lists and _glossaries_ in HTML from a single source written in XM
 
 The [DocBook](http://docbook.sourceforge.net/) XML scheme is good and includes the 'qandaset' element for the creation of FAQ listings and also a 'glossary' element. On the other hand, this project implements simple XSL stylesheets, which I have found useful for my own purposes to create a simple FAQ list and a glossary, intended for use in a website, where I wanted to see and control all of the details. There are stylesheets for 'folded' html (using JavaScript) and long html. 
 
-[comment]: # Here are the webpages that I create using these stylesheets: [Virtual Data Centre FAQ](http://cloudstore.interoute.com/main/knowledge-centre/library/vdc-20-faq) and [VDC 2.0 Glossary](http://cloudstore.interoute.com/main/knowledge-centre/library/vdc-20-glossary). Note that the styles of these pages are set externally by the CSS stylesheets of the company Drupal website.
+Here is a webpage created using the glossary stylesheet: [VDC 2.0 Glossary](http://cloudstore.interoute.com/main/knowledge-centre/library/vdc-20-glossary). Note that the styles of these pages are set externally by the CSS stylesheets of the Drupal website.
 
 This project is a modification of "faqxml" by Mikhail Yakshin [http://faqxml.sourceforge.net]. It uses ideas from the book *XSLT (Second edition)* by Doug Tidwell (O'Reilly, 2008). And thanks to [StackOverflow](http://www.stackoverflow.com) for help with various aspects of XSLT templates.
 
